@@ -11,8 +11,6 @@ public class Block : MonoBehaviour
     [SerializeField] private Material _material4;
 
     private int _indexColor;
-    private int _lengthBlock;
-    private int[] _index—ellBolt;
 
     public void Init(PlayingField playingField)
     {

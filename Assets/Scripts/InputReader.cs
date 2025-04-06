@@ -16,6 +16,12 @@ public class InputReader : MonoBehaviour
         {
             _isMoved = true;
         }
+
+        if (Input.touchCount == 2 && Input.GetTouch(1).phase == TouchPhase.Began)
+        {
+            _isSelect = false;
+            _isMoved = false;
+        }
     }
 
     public bool GetSelect() => GetBoolAsTrigger(ref _isSelect);

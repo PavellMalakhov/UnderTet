@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayingFieldView : MonoBehaviour
 {
@@ -65,7 +66,7 @@ public class PlayingFieldView : MonoBehaviour
         _targetCursorPositionX = _currentCursorPositionX;
 
         if (_cursorPositionX != _targetCursorPositionX)
-        {
+        {  
             _playingField.MoveBlock(_cursorPositionX, _cursorPositionY, _targetCursorPositionX);
         }
 

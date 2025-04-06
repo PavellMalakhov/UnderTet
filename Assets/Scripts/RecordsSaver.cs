@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UIElements;
 
 public class RecordsSaver : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textScore;
     [SerializeField] private TextMeshProUGUI _textlog;
+    [SerializeField] private TextMeshProUGUI _textRecords;
 
     [SerializeField] private Block1 _block1;
     [SerializeField] private Block2 _block2;
@@ -128,10 +130,10 @@ public class RecordsSaver : MonoBehaviour
 
         if (isStraight)
         {
-            _textlog.text += $"{_stringStraight} {DateTime.Now}\n";
+            _textlog.text = $"{_stringStraight} {DateTime.Now}\n{_textlog.text}";
             _straight++;
             _textStraight.text = $"{_stringStraight} {_straight}";
-            ShowDeliteRow(_delitRow, _parentStraight.transform.position.y, _parentStraight);
+            ShowDeliteRow(_delitRow, _parentStraight.transform.position.x, _parentStraight.transform.position.y, _parentStraight);
         }
 
         bool isFlus = true;
@@ -149,10 +151,11 @@ public class RecordsSaver : MonoBehaviour
 
         if (isFlus)
         {
-            _textlog.text += $"{_stringFlush} {DateTime.Now}\n";
+            
+            _textlog.text = $"{_stringFlush} {DateTime.Now}\n{_textlog.text}";
             _flush++;
             _textFlush.text = $"{_stringFlush} {_flush}";
-            ShowDeliteRow(_delitRow, _parentFlush.transform.position.y, _parentFlush);
+            ShowDeliteRow(_delitRow, _parentFlush.transform.position.x, _parentFlush.transform.position.y, _parentFlush);
         }
 
         int[] array = new int[8];
@@ -179,60 +182,65 @@ public class RecordsSaver : MonoBehaviour
             switch (array[i])
             {
                 case 1:
-                    _textlog.text += $"{_stringPair} {DateTime.Now}\n";
+                    _textlog.text = $"{_stringPair} {DateTime.Now}\n{_textlog.text}";
                     _pair++;
                     _textPair.text = $"{_stringPair} {_pair}";
-                    ShowDeliteRow(_delitRow, _parentPair.transform.position.y, _parentPair);
+                    ShowDeliteRow(_delitRow, _parentPair.transform.position.x, _parentPair.transform.position.y, _parentPair);
                     break;
 
                 case 2:
-                    _textlog.text += $"{_stringSet} {DateTime.Now}\n";
+                    _textlog.text = $"{_stringSet} {DateTime.Now}\n{_textlog.text}";
                     _set++;
                     _textSet.text = $"{_stringSet} {_set}";
-                    ShowDeliteRow(_delitRow, _parentSet.transform.position.y, _parentSet);
+                    ShowDeliteRow(_delitRow, _parentSet.transform.position.x, _parentSet.transform.position.y, _parentSet);
                     break;
 
                 case 3:
-                    _textlog.text += $"{_stringCare} {DateTime.Now}\n";
+                    _textlog.text = $"{_stringCare} {DateTime.Now}\n{_textlog.text}";
                     _care++;
                     _textCare.text = $"{_stringCare} {_care}";
-                    ShowDeliteRow(_delitRow, _parentCare.transform.position.y, _parentCare);
+                    ShowDeliteRow(_delitRow, _parentCare.transform.position.x, _parentCare.transform.position.y, _parentCare);
                     break;
 
                 case 4:
-                    _textlog.text += $"\n{_stringFullHouse}\n {DateTime.Now}\n\n";
+                    _textlog.text = $"\n{_stringFullHouse}\n {DateTime.Now}\n\n{_textlog.text}";
                     _fullHouse++;
                     _textFullHouse.text = $"{_stringFullHouse} {_fullHouse}";
-                    ShowDeliteRow(_delitRow, _parentFullHouse.transform.position.y, _parentFullHouse);
+                    ShowDeliteRow(_delitRow, _parentFullHouse.transform.position.x, _parentFullHouse.transform.position.y, _parentFullHouse);
                     break;
 
                 case 5:
-                    _textlog.text += $"\n{_stringDoubleSet}\n {DateTime.Now}\n\n";
+                    _textlog.text = $"\n{_stringDoubleSet}\n {DateTime.Now}\n\n{_textlog.text}";
                     _doubleSet++;
                     _textDoubleSet.text = $"{_stringDoubleSet} {_doubleSet}";
-                    ShowDeliteRow(_delitRow, _parentDoubleSet.transform.position.y, _parentDoubleSet);
+                    ShowDeliteRow(_delitRow, _parentDoubleSet.transform.position.x, _parentDoubleSet.transform.position.y, _parentDoubleSet);
                     break;
 
                 case 6:
-                    _textlog.text += $"\n{_stringSetCare}\n {DateTime.Now}\n\n";
+                    _textlog.text = $"\n{_stringSetCare}\n {DateTime.Now}\n\n{_textlog.text}";
                     _setCare++;
                     _textSetCare.text = $"{_stringSetCare} {_setCare}";
-                    ShowDeliteRow(_delitRow, _parentSetCare.transform.position.y, _parentSetCare);
+                    ShowDeliteRow(_delitRow, _parentSetCare.transform.position.x, _parentSetCare.transform.position.y, _parentSetCare);
                     break;
 
                 case 7:
-                    _textlog.text += $"\n{_stringFlushRoyal}\n {DateTime.Now}\n\n";
+                    _textlog.text = $"\n{_stringFlushRoyal}\n {DateTime.Now}\n\n{_textlog.text}";
                     _flushRoyal++;
                     _textFlushRoyal.text = $"{_stringFlushRoyal} {_flushRoyal}";
-                    ShowDeliteRow(_delitRow, _parentFlushRoyal.transform.position.y, _parentFlushRoyal);
+                    ShowDeliteRow(_delitRow, _parentFlushRoyal.transform.position.x, _parentFlushRoyal.transform.position.y, _parentFlushRoyal);
                     break;
             }
         }
+
+        _textRecords.text = $"P{_pair} S{_set} C{_care} FH{_fullHouse} DS{_doubleSet} \r\nSC{_setCare} F{_flush} St{_straight} FR{_flushRoyal}";
     }
 
-    private void ShowDeliteRow(int[,] delitRow, float positionY, GameObject parentObject)
+    private void ShowDeliteRow(int[,] delitRow, float positionX, float positionY, GameObject parentObject)
     {
         List<Block> blocks = new List<Block>();
+
+        float offsetRowX = -4.6f;
+        float offsetRowY = -1f;
 
         if (_blocks.ContainsKey(parentObject))
         {
@@ -250,28 +258,28 @@ public class RecordsSaver : MonoBehaviour
 
             if (delitRow[i, 0] == 1)
             {
-                blocks.Add(Instantiate(_block1, new Vector3(i - 12, positionY, 0), Quaternion.identity, parentObject.transform));
+                blocks.Add(Instantiate(_block1, new Vector3(positionX + i + offsetRowX, positionY + offsetRowY, 0), Quaternion.identity, parentObject.transform));
                 blocks[blocks.Count - 1].Init(delitRow[i, 1]);
                 i += lengthBlock - 1;
             }
 
             if (delitRow[i, 0] == 2)
             {
-                blocks.Add(Instantiate(_block2, new Vector3(i - 12, positionY, 0), Quaternion.identity, parentObject.transform));
+                blocks.Add(Instantiate(_block2, new Vector3(positionX + i + offsetRowX, positionY + offsetRowY, 0), Quaternion.identity, parentObject.transform));
                 blocks[blocks.Count - 1].Init(delitRow[i, 1]);
                 i += lengthBlock - 1;
             }
 
             if (delitRow[i, 0] == 3)
             {
-                blocks.Add(Instantiate(_block3, new Vector3(i - 12, positionY, 0), Quaternion.identity, parentObject.transform));
+                blocks.Add(Instantiate(_block3, new Vector3(positionX + i + offsetRowX, positionY + offsetRowY, 0), Quaternion.identity, parentObject.transform));
                 blocks[blocks.Count - 1].Init(delitRow[i, 1]);
                 i += lengthBlock - 1;
             }
 
             if (delitRow[i, 0] == 4)
             {
-                blocks.Add(Instantiate(_block4, new Vector3(i - 12, positionY, 0), Quaternion.identity, parentObject.transform));
+                blocks.Add(Instantiate(_block4, new Vector3(positionX + i + offsetRowX, positionY + offsetRowY, 0), Quaternion.identity, parentObject.transform));
                 blocks[blocks.Count - 1].Init(delitRow[i, 1]);
                 i += lengthBlock - 1;
             }
